@@ -1,6 +1,6 @@
 --[[
 Transport Rings Control Program
-v1.1.0
+v1.2.0
 Created By: Augur ShicKla
 
 System Requirements:
@@ -51,7 +51,8 @@ OK = "OK",
 BUSY = "BUSY", 
 BUSY_TARGET = "Target Ring Platform is Busy", 
 OBSTRUCTED = "Ring Platform is Obstructed", 
-OBSTRUCTED_TARGET = "Target Ring Platform is Obstructed"}
+OBSTRUCTED_TARGET = "Target Ring Platform is Obstructed",
+NOT_ENOUGH_POWER = "Ring Platform Has No Power"}
 
 -- Button Object -------------------------------------------------------------------
 local Button = {}
@@ -198,7 +199,10 @@ end)
 -- End of Event Handlers -----------------------------------------------------------
 
 local function AunisVersionCheck()
-  local success, result = pcall(rings.getAunisVersion)
+  local success, result = pcall(rings.getJSGVersion)
+  if not success then
+    success, result = pcall(rings.getAunisVersion)
+  end
   if not success then
     AunisVersion = "legacy"
   else
